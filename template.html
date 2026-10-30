@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" {{HTMLATTR}}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}">
+{{ADMETA}}<link rel="canonical" href="{{CANON}}">
+<link rel="icon" href="{{ROOT}}favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Clinched">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESC}}">
+<meta property="og:url" content="{{CANON}}">
+<meta property="og:image" content="{{OGIMG}}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:ital,wght@0,500..900;1,500..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ROOT}}style.css">
+{{JSONLD}}
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="{{ROOT}}./">Clinch<i>ed</i></a>
+  <nav>
+    <a href="{{ROOT}}how-it-works/">How it works</a>
+  </nav>
+</header>
+
+<div class="ad ad-leader" data-ad="leaderboard"></div>
+
+<section class="band" id="fight">
+  <div class="band-in">
+    <h1 class="kick">{{H1}}</h1>
+    <div class="year-row">
+      {{PREV}}
+      <div id="year">{{YEAR}}</div>
+      {{NEXT}}
+      <div class="band-copy">
+        <p id="summary">{{SUMMARY}}</p>
+        <div class="band-ctl">
+          <label>Season <select id="pick"></select></label>
+          <label>Score it by <select id="scoring"></select></label>
+          <label class="check"><input type="checkbox" id="spoil"> Hide what's ahead</label>
+        </div>
+      </div>
+    </div>
+    <nav class="strip" id="strip" aria-label="All seasons. Bar height is title tension.">{{STRIP}}</nav>
+  </div>
+</section>
+
+<p class="whatif" id="whatif" hidden></p>
+
+<main class="fight">
+  <section class="tower-wrap" aria-label="Championship standings">
+    <h2 id="towerHead">Standings</h2>
+    <div class="tower" id="tower"></div>
+    <p class="fineprint" id="towerNote"></p>
+  </section>
+
+  <section class="views">
+    <div class="tabs" role="tablist">
+      <button role="tab" data-v="gap" aria-selected="true">Gap to leader</button>
+      <button role="tab" data-v="reach" aria-selected="false">Still alive</button>
+      <button role="tab" data-v="duel" aria-selected="false">Tug of war</button>
+      <button role="tab" data-v="grid" aria-selected="false">Race sheet</button>
+    </div>
+    <div class="panel" id="p-gap">
+      <h3 id="gapHead">Points behind the leader</h3>
+      <div class="chart" id="gapChart"></div>
+      <div class="legend" id="gapLegend"></div>
+    </div>
+    <div class="panel" id="p-reach" hidden>
+      <h3 id="reachHead"></h3>
+      <div id="reach"></div>
+      <p class="fineprint">Solid bar: points now. Hatched: the most that driver could still reach by winning everything left. The black line is the leader's score, and a driver whose reach falls short of it is out.</p>
+    </div>
+    <div class="panel" id="p-duel" hidden>
+      <div class="duel-pick">
+        <select id="duelA" aria-label="First driver"></select>
+        <span>versus</span>
+        <select id="duelB" aria-label="Second driver"></select>
+      </div>
+      <h3 id="duelHead"></h3>
+      <div class="chart" id="duelChart"></div>
+      <div class="chart" id="duelBars"></div>
+    </div>
+    <div class="panel" id="p-grid" hidden>
+      <h3>Every result, top of the table</h3>
+      <div class="sheet" id="sheet"></div>
+      <p class="fineprint">Number is the finishing place. R: did not finish. Blank: did not take part. Other codes: DNS did not start, DNQ did not qualify, DSQ disqualified, NC not classified.</p>
+    </div>
+
+    <h3 class="log-head">Turning points</h3>
+    <ol class="log" id="log"></ol>
+  </section>
+</main>
+
+{{RECAP}}
+
+<div class="ad ad-mid" data-ad="midpage"></div>
+
+<section class="archive" id="archive">
+  <div class="arc-head">
+    <h2>All Title Fights</h2>
+    <div class="sorts" id="sorts">
+      <button data-s="tn" class="on">Most tense</button>
+      <button data-s="gap">Closest finish</button>
+      <button data-s="chg">Most lead changes</button>
+      <button data-s="flip">Decided by the rules</button>
+      <button data-s="y">By year</button>
+    </div>
+  </div>
+  <p class="arc-note" id="arcNote"></p>
+  <div class="tiles" id="tiles">{{TILES}}</div>
+</section>
+
+<div class="ad ad-foot" data-ad="footer"></div>
+
+<footer class="foot">
+  {{GUIDES}}
+  <p>Data from <a href="https://github.com/f1db/f1db">F1DB</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, adapted into per-season files. <span id="updated"></span></p>
+  <p>An unofficial fan project. Not associated with Formula 1 companies, the FIA or any team. F1 and Formula 1 are trademarks of Formula One Licensing B.V.</p>
+  <p><a href="{{ROOT}}how-it-works/">How it works</a> · <a href="{{ROOT}}privacy/">Privacy</a></p>
+</footer>
+
+<div class="dock" id="dock">
+  <button id="play" aria-label="Play the season">▶</button>
+  <div class="dock-read">
+    <b id="roundNo"></b>
+    <span id="roundName"></span>
+  </div>
+  <div class="track">
+    <input id="slider" type="range" min="0" max="1" step="0.01" value="0" aria-label="Point in the season">
+    <div class="ticks" id="ticks" aria-hidden="true"></div>
+  </div>
+</div>
+
+<div class="tip" id="tip" hidden></div>
+
+<script src="{{ROOT}}ads.js"></script>
+<script src="{{ROOT}}app.js"></script>
+</body>
+</html>

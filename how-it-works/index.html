@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Clinched Works: Data and Methods</title>
+<meta name="description" content="How Clinched calculates title tension, title elimination and what-if scoring, and where its Formula 1 data comes from.">
+<link rel="canonical" href="https://vmurthy45.github.io/clinched/how-it-works/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Clinched">
+<meta property="og:title" content="How Clinched Works: Data and Methods">
+<meta property="og:description" content="How Clinched calculates title tension, title elimination and what-if scoring, and where its Formula 1 data comes from.">
+<meta property="og:url" content="https://vmurthy45.github.io/clinched/how-it-works/">
+<meta property="og:image" content="https://vmurthy45.github.io/clinched/og/home.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:ital,wght@0,500..900;1,500..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Clinched", "item": "https://vmurthy45.github.io/clinched/"}, {"@type": "ListItem", "position": 2, "name": "How it works", "item": "https://vmurthy45.github.io/clinched/how-it-works/"}]}</script>
+</head>
+<body style="padding-bottom:0">
+<header class="top"><a class="brand" href=".././">Clinch<i>ed</i></a><nav><a href="../how-it-works/">How it works</a></nav></header>
+<div class="ad ad-leader" data-ad="leaderboard"></div>
+<main class="prose">
+<h1>How it works</h1>
+<p>Clinched replays every Formula 1 drivers' championship round by round. It is an independent fan project.</p>
+<h2>Tension score</h2>
+<p>Each finished season is ranked on four things: how small the final margin was (measured in race wins, so eras compare fairly), how late the title was settled, how often the lead changed, and how much of the year the top two spent within one win. The score out of 100 is the average of those four rankings.</p>
+<h2>Still alive</h2>
+<p>After each round we give a driver the maximum from every remaining race, including sprints and fastest-lap points where they existed, and apply that season's dropped-score rule. A tie with the leader counts as alive, because countback could still settle it. For finished seasons the official record has the final say on when a title was won.</p>
+<h2>Sprint weekends</h2>
+<p>A sprint and its Grand Prix count as one round, so standings are shown after the whole weekend.</p>
+<h2>What-if scoring</h2>
+<p>The alternative systems apply to Grand Prix finishing places only, with no sprints, fastest-lap points or half-points races, and every result counts. Only drivers who scored officially are included, so the lower table is approximate.</p>
+<h2>Data</h2>
+<p>Results come from <a href="https://github.com/f1db/f1db">F1DB</a>. As a check, every driver's final total is recalculated from race points under that season's rules and compared with the official table before each update.</p>
+<nav class="guides" aria-label="Guides"><a href="../closest-f1-title-fights/">Closest F1 title fights</a><a href="../f1-titles-decided-at-the-last-race/">Titles decided at the last race</a><a href="../earliest-f1-title-wins/">Earliest title wins</a><a href="../f1-champions-under-other-points-systems/">Champions under other points systems</a><a href="../f1-world-champions-list/">Every F1 world champion</a><a href="../f1-points-system-history/">How F1 points changed</a></nav>
+</main>
+<div class="ad ad-foot" data-ad="footer"></div>
+<footer class="foot">
+  <p>Data from <a href="https://github.com/f1db/f1db">F1DB</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, adapted into per-season files. Results up to 25 October 2026.</p>
+  <p>An unofficial fan project. Not associated with Formula 1 companies, the FIA or any team. F1 and Formula 1 are trademarks of Formula One Licensing B.V.</p>
+  <p><a href="../how-it-works/">How it works</a> · <a href="../privacy/">Privacy</a></p>
+</footer>
+<script src="../ads.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vmurthy45.github.io/clinched/sitemap.xml
