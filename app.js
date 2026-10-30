@@ -164,6 +164,7 @@ function summary() {
   const gap = fmt(M.P[a][D] - M.P[b][D]);
   if (isLive()) {
     const left = S.rounds.length - D;
+    if (S.decided) return `${S.drivers[a].f} has won the title, ${gap} clear with ${plural(left, "round")} left.`;
     return `${S.drivers[a].f} leads ${S.drivers[b].f} by ${gap} with ${plural(left, "round")} left.`;
   }
   const c = st.mode === "official" ? S.decided : M.clinch;

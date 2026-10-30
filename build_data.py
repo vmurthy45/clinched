@@ -144,6 +144,8 @@ for year in sorted(by_year):
     final = sorted((f for f in finals if int(f["year"]) == year),
                    key=lambda f: int(f["positionDisplayOrder"]))
     done = max([int(r["round"]) for r in res], default=0)
+    if not done:
+        continue  # a season appears once its first race has been run
 
     # Everyone who earned a point, plus every regular entrant in the modern
     # era. A 1950s field with 90 one-off entries would drown the tower.
@@ -310,11 +312,14 @@ pct(lambda s: s["close"])                                    # within one win
 for s in over:
     s["tn"] = round(100 * sum(s.pop("_p")) / 4)
 
-json.dump({"updated": max(r["date"] for r in races if int(r["round"]) <= next(
-    s["done"] for s in index if s["y"] == int(r["year"]))), "seasons": index},
+latest = {s["y"]: s["done"] for s in index}
+json.dump({"updated": max(r["date"] for r in races if int(r["round"]) <= latest.get(int(r["year"]), 0)),
+           "seasons": index},
     open(os.path.join(OUT, "index.json"), "w"), separators=(",", ":"), ensure_ascii=False)
 
 print(f"{len(index)} seasons written")
 print(f"{len(problems)} final totals disagree with the official table")
 for p in problems[:40]:
     print("  ", p)
+if problems:
+    sys.exit("Stopping: the data does not match the official table")

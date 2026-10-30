@@ -6,6 +6,8 @@ Every Formula One title fight since 1950, scrubbed race by race. Static site wit
 
 ## Refresh the data
 
+This runs by itself. `.github/workflows/refresh.yml` checks for a new F1DB release twice a day, rebuilds the site and publishes it. GitHub emails you if a run fails. To run it now, use the Actions tab. To do it by hand:
+
 Download `f1db-csv.zip` from the latest [F1DB release](https://github.com/f1db/f1db/releases), unzip it, then:
 
     python3 build_data.py /path/to/unzipped/csv
@@ -14,6 +16,8 @@ Download `f1db-csv.zip` from the latest [F1DB release](https://github.com/f1db/f
 The script prints how many final totals disagree with the official table. That number should be 0.
 
 `template.html` is the source for the home and season pages. Edit it, not the generated `index.html` files, then re-run `build_pages.py`. That script also rewrites the guides, `sitemap.xml`, `robots.txt`, `llms.txt` and the share images in `og/`.
+
+The automated build reads two repository variables: `SITE_URL` and `ADSENSE_ID`. Set them once you have a domain and an AdSense account.
 
 ## Turn on ads
 

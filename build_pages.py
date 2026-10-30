@@ -167,6 +167,12 @@ def season_copy(s, f):
         rnd = f["S"]["rounds"][f["done"] - 1]
         lead = f'{A} leads the {y} Formula 1 drivers\' championship with {pa} points, {gap} ahead of {B} on {pb}, after the {rnd["fn"]} (round {f["done"]} of {f["n"]}).'
         names = spell([d[i]["f"] for i in alive])
+        won = f["S"]["decided"]
+        if won:
+            at = f["S"]["rounds"][won - 1]["fn"]
+            lead = f"{A} has won the {y} Formula 1 World Championship, clinching the title at the {at}. {d[a]['n']} has {pa} points with {plural(f['n'] - f['done'], 'round')} left."
+            return lead, [(f"Who won the {y} F1 World Championship?", lead),
+                          (f"When was the {y} F1 title decided?", f"At round {won} of {f['n']}, the {at} ({nice(f['S']['rounds'][won - 1]['d'])}).")]
         qa = [(f"Who is leading the {y} F1 drivers' championship?", lead),
               (f"Who can still win the {y} F1 title?",
                f"{names} can still win it mathematically. {left and num(left)} points remain across {plural(f['n'] - f['done'], 'round')}."),
@@ -216,10 +222,16 @@ def recap_html(s, f, lead, qa):
 
 
 def og_image(name, big, small, era):
+    # Impact is only on the Mac. Automated runs keep existing images and use a
+    # plain bold font for any new season.
     bg, fg = era[1], era[2]
+    impact = "/System/Library/Fonts/Supplemental/Impact.ttf"
+    if not os.path.exists(impact):
+        impact = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+        if os.path.exists(f"{HERE}/og/{name}.png") or not os.path.exists(impact):
+            return
     img = Image.new("RGB", (1200, 630), bg)
     draw = ImageDraw.Draw(img)
-    impact = "/System/Library/Fonts/Supplemental/Impact.ttf"
     size = 330 if len(big) <= 4 else 150
     draw.text((60, 70), big, font=ImageFont.truetype(impact, size), fill=fg)
     draw.text((64, 500), small, font=ImageFont.truetype(impact, 58), fill=fg)
@@ -246,7 +258,7 @@ def build_season(s):
     versus = rival_title(f)
     title = f"{y} F1 Title Race: {versus}, Round by Round | Clinched"
     if s["live"]:
-        title = f"{y} F1 Title Race: Standings and Who Can Still Win | Clinched"
+        title = f"{y} F1 Title Race: Standings and Results | Clinched" if f["S"]["decided"] else f"{y} F1 Title Race: Standings and Who Can Still Win | Clinched"
     url = f"{SITE_URL}/{y}/"
     desc = f"{lead} Replay the season race by race with moving standings and gap charts."
     jsonld = ldjson(faq(qa), crumbs(("Clinched", SITE_URL + "/"), (f"{y} title race", url)))

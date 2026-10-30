@@ -92,4 +92,3 @@ Each season page states the champion, margin, deciding round and a round-by-roun
 - [1950 F1 title race](https://vmurthy45.github.io/clinched/1950/)
 
 ## Method
-- [How it works](https://vmurthy45.github.io/clinched/how-it-works/)

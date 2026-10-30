@@ -1,0 +1,59 @@
+name: Refresh results
+
+on:
+  schedule:
+    - cron: "23 6,18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pillow
+
+      - name: Download the latest F1DB release
+        run: |
+          mkdir -p "$RUNNER_TEMP/f1db"
+          cd "$RUNNER_TEMP/f1db"
+          base=https://github.com/f1db/f1db/releases/latest/download
+          curl -fsSLO "$base/f1db-csv.zip"
+          curl -fsSLO "$base/checksums_sha256.txt"
+          grep ' f1db-csv.zip$' checksums_sha256.txt | sha256sum -c -
+          unzip -qo f1db-csv.zip -d csv
+
+      - name: Build
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://vmurthy45.github.io/clinched' }}
+          ADSENSE_ID: ${{ vars.ADSENSE_ID }}
+        run: |
+          python3 build_data.py "$RUNNER_TEMP/f1db/csv"
+          python3 build_pages.py
+
+      - name: Publish any changes
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No new results"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update results"
+          git push origin HEAD:main
+
+      # GitHub switches off schedules after 60 quiet days, which would catch the off-season.
+      - name: Keep the schedule running
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/$GITHUB_REPOSITORY/actions/workflows/refresh.yml/enable"
