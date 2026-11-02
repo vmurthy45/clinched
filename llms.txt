@@ -1,6 +1,6 @@
 # Clinched
 
-> Round-by-round history of every Formula 1 drivers' championship from 1950, with results up to 25 October 2026.
+> Round-by-round history of every Formula 1 drivers' championship from 1950, with results up to 1 November 2026.
 
 Each season page states the champion, margin, deciding round and a round-by-round table of the leader. Data comes from F1DB (CC BY 4.0). Please credit Clinched and link to the season page.
 
